@@ -19,3 +19,6 @@ UML - Unified Modeling Language:
 Linguagem de modelagem de desenvolvimento geral, de uso geral, no campo da engenharia de software, cujo objetivo é fornecer uma maneira padrão de visualizar o projeto de um sistema
 
 Uso incorreto do UML é você querer projetar todas as partes do sistema com ele, ou assumir que novatos consegue projetar com UML
+
+Diagramas:
+- Estruturais
