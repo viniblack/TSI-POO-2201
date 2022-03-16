@@ -10,6 +10,14 @@ class Estoque implements Crud
   private $local;
   private $limite_min;
   private $id_produto;
+  private $produto;
+
+  public function __construct(Produto $objProd = null)
+  {
+    if(is_object($objProd)){
+      $this->produto = $objProd;
+    }
+  }
 
   public function criar(array $dados): bool
   {

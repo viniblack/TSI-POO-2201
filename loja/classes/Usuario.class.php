@@ -1,16 +1,26 @@
-<?php 
+<?php
 
 chdir(__DIR__);
 require_once '../interfaces/Crud.interface.php';
 require_once '../interfaces/Usuario.interface.php';
 
-class Usuario implements Crud, Usuario
- {
+class Usuario implements Crud, iUsuario
+{
   private $email;
   private $nome;
   private $id;
   private $senha;
   private $id_perfil;
+
+  public function __construct()
+  {
+    echo "Contrutor da classe Usuario\n";
+  }
+
+  protected function xpto()
+  {
+    echo "Método XPTO\n";
+  }
 
   public function criar(array $dados): bool
   {
@@ -33,7 +43,8 @@ class Usuario implements Crud, Usuario
     return [];
   }
 
-  public function acao(array $id_perfil):bool{
+  public function acao(array $id_perfil): bool
+  {
     echo "Ação genérica para usuários";
     return true;
   }
