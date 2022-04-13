@@ -1,6 +1,5 @@
 <?php
 
-require_once('./Investimento.class.php');
 require_once('../interface/Crud.class.php');
 
 class Ativo implements Crud

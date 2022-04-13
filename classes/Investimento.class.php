@@ -1,7 +1,6 @@
 <?php
 
 require_once('../interface/Crud.class.php');
-require_once('./Cliente.class.php');
 
 class Investimento implements Crud
 {
