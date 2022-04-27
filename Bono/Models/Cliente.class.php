@@ -13,21 +13,70 @@ class Cliente extends Model
 
   function inserir(array $dados): ?int
   {
-    return null;
+    $stmt = $this->prepare("INSERT INTO cliente (Name, phone) 
+                            VALUES (:Name, :phone)");
+
+    $stmt->bindParam(':Name', $dados['Name']);
+    $stmt->bindParam(':phone', $dados['phone']);
+
+    if ($stmt->execute()) {
+      return $this->lastInsertId();
+    } else {
+      return false;
+    }
   }
 
-  function atualizar(int $id, array $dados): bool
+  function atualizar(int $id_cliente, array $dados): bool
   {
-    return true;
+    $stmt = $this->prepare("UPDATE {$this->tabela} SET 
+                              Name = :Name, phone = :phone
+                            WHERE id_cliente = :id_cliente");
+
+    $stmt->bindParam(':id_cliente', $id_cliente);
+    $stmt->bindParam(':Name', $dados['Name']);
+    $stmt->bindParam(':phone', $dados['phone']);
+
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   function apagar(int $id): bool
   {
-    return true;
+    $stmt = $this->prepare(
+      "DELETE FROM {$this->tabela}
+        WHERE id_cliente = :id_cliente"
+    );
+
+    $stmt->bindParam(':id_cliente', $id_cliente);
+
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+      return true;
+    } else {
+      echo "nao foi";
+      return false;
+    }
   }
 
-  function listar(int $id = null): ?array
+  function listar(int $id_cliente = null): ?array
   {
-    return null;
+    $stmt = $this->prepare("SELECT Name, Phone FROM {$this->tabela}  
+                            WHERE id_cliente = :id_cliente");
+
+    $stmt->bindParam(':id_cliente', $id_cliente);
+
+    if ($stmt->execute()) {
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+    } else {
+      echo "nao foi";
+      return [];
+    }
   }
 }
+
+$cliente = new Cliente;
+echo json_encode($cliente->listar(3));

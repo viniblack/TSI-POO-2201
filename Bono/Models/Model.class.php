@@ -1,4 +1,5 @@
 <?php
+include_once __DIR__ . '/../config/db.php';
 
 abstract class Model extends PDO
 {
@@ -6,7 +7,7 @@ abstract class Model extends PDO
 
   public function __construct()
   {
-    if (!is_file(__DIR__ . '/../config/db.php')) {
+    if (!defined('DSN') || !defined('DB_USER') || !defined('DB_PASS')) {
       die('Não há arquivo de configuração do BD');
     }
 
