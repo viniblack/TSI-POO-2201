@@ -13,11 +13,11 @@ class Cliente extends Model
 
   function inserir(array $dados): ?int
   {
-    $stmt = $this->prepare("INSERT INTO cliente (Name, phone) 
-                            VALUES (:Name, :phone)");
+    $stmt = $this->prepare("INSERT INTO $this->tabela (name, telefone) 
+                            VALUES (:name, :telefone)");
 
-    $stmt->bindParam(':Name', $dados['Name']);
-    $stmt->bindParam(':phone', $dados['phone']);
+    $stmt->bindParam(':name', $dados['name']);
+    $stmt->bindParam(':telefone', $dados['telefone']);
 
     if ($stmt->execute()) {
       return $this->lastInsertId();
@@ -26,15 +26,15 @@ class Cliente extends Model
     }
   }
 
-  function atualizar(int $id_cliente, array $dados): bool
+  function atualizar(int $id, array $dados): bool
   {
     $stmt = $this->prepare("UPDATE {$this->tabela} SET 
-                              Name = :Name, phone = :phone
-                            WHERE id_cliente = :id_cliente");
+                              name = :name, telefone = :telefone
+                            WHERE id = :id");
 
-    $stmt->bindParam(':id_cliente', $id_cliente);
-    $stmt->bindParam(':Name', $dados['Name']);
-    $stmt->bindParam(':phone', $dados['phone']);
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':name', $dados['name']);
+    $stmt->bindParam(':telefone', $dados['telefone']);
 
     $stmt->execute();
     if ($stmt->rowCount() > 0) {
@@ -44,39 +44,26 @@ class Cliente extends Model
     }
   }
 
-  function apagar(int $id): bool
+  function listar(int $id = null): ?array
   {
-    $stmt = $this->prepare(
-      "DELETE FROM {$this->tabela}
-        WHERE id_cliente = :id_cliente"
-    );
+    if ($id) {
 
-    $stmt->bindParam(':id_cliente', $id_cliente);
+      $stmt = $this->prepare("SELECT id, name, telefone FROM {$this->tabela}  
+                            WHERE id = :id");
+      $stmt->bindParam(':id', $id);
+    } else {
+      $stmt = $this->prepare("SELECT id, name, telefone FROM {$this->tabela}");
+    }
 
     $stmt->execute();
-    if ($stmt->rowCount() > 0) {
-      return true;
-    } else {
-      echo "nao foi";
-      return false;
+
+    while ($registro = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $lista[] = $registro;
     }
-  }
 
-  function listar(int $id_cliente = null): ?array
-  {
-    $stmt = $this->prepare("SELECT Name, Phone FROM {$this->tabela}  
-                            WHERE id_cliente = :id_cliente");
-
-    $stmt->bindParam(':id_cliente', $id_cliente);
-
-    if ($stmt->execute()) {
-      return $stmt->fetch(PDO::FETCH_ASSOC);
-    } else {
-      echo "nao foi";
-      return [];
-    }
+    return $lista;
   }
 }
 
 $cliente = new Cliente;
-echo json_encode($cliente->listar(3));
+$cliente->inserir(['name'=> 'gui', 'telefone'=>'11985455212']);
