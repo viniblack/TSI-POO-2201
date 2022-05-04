@@ -59,6 +59,25 @@ class Investimento extends Model
 
     $stmt->execute();
 
+    $lista = [];
+
+    while ($registro = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $lista[] = $registro;
+    }
+
+    return $lista;
+  }
+
+  function carteiraCliente(int $id_cliente): array
+  {
+    $stmt = $this->prepare("SELECT id, qtd, id_cliente, id_ativo FROM {$this->tabela}  
+                            WHERE id_cliente = :id_cliente");
+    $stmt->bindParam(':id_cliente', $id_cliente);
+
+    $stmt->execute();
+
+    $lista = [];
+
     while ($registro = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $lista[] = $registro;
     }
@@ -67,5 +86,5 @@ class Investimento extends Model
   }
 }
 
- $investimento = new Investimento;
- var_dump( $investimento->listar());
+// $investimento = new Investimento;
+// var_dump($investimento->listar());

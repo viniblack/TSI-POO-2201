@@ -64,6 +64,3 @@ class Cliente extends Model
     return $lista;
   }
 }
-
-$cliente = new Cliente;
-$cliente->inserir(['name'=> 'gui', 'telefone'=>'11985455212']);

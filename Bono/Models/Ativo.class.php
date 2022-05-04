@@ -64,6 +64,6 @@ class Ativo extends Model
   }
 }
 
-$ativo = new Ativo;
+// $ativo = new Ativo;
 
-echo $ativo->atualizar(4, ['nome'=> 'ITSA4']);
+// echo $ativo->atualizar(4, ['nome'=> 'ITSA4']);
