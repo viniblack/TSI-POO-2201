@@ -35,7 +35,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <td>Totais</td>
+        <td>TotaL</td>
         <td><?= count($clientes) ?> clientes</td>
         <td></td>
         <td></td>
