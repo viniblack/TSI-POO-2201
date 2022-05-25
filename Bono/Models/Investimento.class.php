@@ -68,12 +68,14 @@ class Investimento extends Model
     return $lista;
   }
 
-  function carteiraCliente(int $id_cliente): array
+  function cliente(int $id_cliente): ?array
   {
-    $stmt = $this->prepare("SELECT id, qtd, id_cliente, id_ativo FROM {$this->tabela}  
-                            WHERE id_cliente = :id_cliente");
-    $stmt->bindParam(':id_cliente', $id_cliente);
-
+    $stmt = $this->prepare(
+      "SELECT id, qtd, id_cliente, id_ativo
+      FROM {$this->tabela}  
+      WHERE id_cliente = :id"
+    );
+    $stmt->bindParam(':id', $id_cliente);
     $stmt->execute();
 
     $lista = [];
@@ -87,4 +89,6 @@ class Investimento extends Model
 }
 
 // $investimento = new Investimento;
-// var_dump($investimento->listar());
+// // var_dump($investimento->listar());
+
+// var_dump($investimento->atualizar(4, ['qtd' => '10', 'id_ativo' => '4', 'id_cliente' => '29']));
